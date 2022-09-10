@@ -1,6 +1,6 @@
 ---
 # サーバ (hack12)
-- hosts: calc
+- hosts: client
   gather_facts: true
   remote_user: "{{ user }}"
   vars_files:

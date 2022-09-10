@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 10s # デフォルトの監視対象にpullする間隔
+  external_labels: # 外部と通信するときのラベル
+    monitor: 'codelab-monitor'
+scrape_configs: # 監視対象ごとの設定
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: 
+        - '192.168.122.15:9100'
+        - '192.168.122.16:9100'
