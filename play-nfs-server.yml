@@ -1,6 +1,6 @@
 ---
 # サーバ (hack22)
-- hosts: serv
+- hosts: server
   gather_facts: true
   remote_user: "{{ user }}"
   vars_files:

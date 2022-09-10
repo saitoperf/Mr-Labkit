@@ -1,4 +1,4 @@
-- hosts: serv
+- hosts: server
   gather_facts: true
 
   tasks:

@@ -1,0 +1,7 @@
+---
+# サーバ (hack22)
+- hosts: client
+  gather_facts: true
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml

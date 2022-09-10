@@ -1,6 +1,6 @@
 ---
-# サーバ (hack22)
-- hosts: serv
+# クライアントマシンに入れる
+- hosts: all
   gather_facts: true
   remote_user: "{{ user }}"
   vars_files:
@@ -16,7 +16,7 @@
 
   # 設定ファイルの適用
   - name: add hosts
-    shell: echo {{ serverip }}  ldap-server >> /etc/hosts
+    shell: echo {{ serverip }} ldap-server >> /etc/hosts
   - name: configure sssd
     copy:
       src: sssd/sssd.conf
