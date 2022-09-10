@@ -5,3 +5,27 @@
   remote_user: "{{ user }}"
   vars_files:
   - vars.yml
+
+  tasks:
+  - name: install docker
+    apt:
+      name: docker
+      state: latest
+  - name: install docker-compose
+    apt:
+      name: docker-compose
+      state: latest
+  
+  - name: make prometheus dir
+    file:
+      path: /prometheus/client
+      state: directory
+      recurse: yes
+
+  - name: cp docker-compose.yml
+    copy:
+      src: prometheus/client/docker-compose.yml
+      dest: /home/prometheus/client/docker-compose.yml
+
+  - name: run prometheus container
+    shell: docker-compose up -d chdir=/home/prometheus/client/docker-compose.yml
