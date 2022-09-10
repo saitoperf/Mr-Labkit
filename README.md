@@ -15,3 +15,8 @@ cd Mr-Labkit
     - vars.yml
     - files/nfs/exports
     - files/prometheus/server/prometheus.yml
+
+
+## メモ
+- prometheusのデプロイはまだです！
+- nfsはまだコンテナ化されていません！(aptコマンドが使えるディストリビューションでのみ実行可能)
