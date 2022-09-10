@@ -1,0 +1,20 @@
+---
+# サーバ (hack12)
+- hosts: calc
+  gather_facts: true
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml
+
+  tasks:
+  # 各サービスのインストール
+  - name: install NFS
+    apt:
+      name: nfs-common
+      state: latest
+  - name: mount
+    mount:
+      src: ldap-server:/home
+      path: /home
+      fstype: nfs
+      state: mounted

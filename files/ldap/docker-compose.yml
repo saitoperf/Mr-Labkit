@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  ldap-server:
+    image: osixia/openldap:latest
+    restart: always
+    container_name: ldap-host
+    environment:
+      LDAP_ORGANISATION: "saito_company"
+      LDAP_DOMAIN: "example.com"
+      LDAP_ADMIN_PASSWORD: "admin"
+    ports:
+      - "389:389"
+      - "636:636"
+
+  ldap-admin:
+    image: osixia/phpldapadmin:latest
+    restart: always
+    container_name: ldap-admin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "ldap"
+      PHPLDAPADMIN_HTTPS: "false"
+    ports:
+      - "8080:80"
+    links:
+      - "ldap-server:ldap"

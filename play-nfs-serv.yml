@@ -1,0 +1,29 @@
+---
+# サーバ (hack22)
+- hosts: serv
+  gather_facts: true
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml
+
+  tasks:
+  # 各サービスのインストール
+  - name: install NFS
+    apt:
+      name: nfs-kernel-server
+      state: latest
+
+  # - name: starting nfs server
+  #   service:
+  #     name: nfs-kernel-server
+  #     state: enabled
+  #     enabled: true
+  
+  # 設定ファイルの適用
+  - name: configure NFS
+    copy:
+      src: nfs/exports
+      dest: /etc/exports
+
+  - name: export file-system
+    command: exportfs -a
