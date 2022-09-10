@@ -1,5 +1,8 @@
 - hosts: server
   gather_facts: true
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml
 
   tasks:
   #sambaのインストール

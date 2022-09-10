@@ -1,5 +1,5 @@
 ---
-# サーバ (hack22)
+# サーバ (hack12)
 - hosts: client
   gather_facts: true
   remote_user: "{{ user }}"
@@ -7,25 +7,38 @@
   - vars.yml
 
   tasks:
-  - name: install docker
+  # 各サービスのインストール
+  - name: install NFS
     apt:
-      name: docker
+      name: nfs-common
       state: latest
-  - name: install docker-compose
-    apt:
-      name: docker-compose
-      state: latest
+  - name: mount
+    mount:
+      src: ldap-server:/home
+      path: /home
+      fstype: nfs
+      state: mounted
+
+  # tasks:
+  # - name: install docker
+  #   apt:
+  #     name: docker
+  #     state: latest
+  # - name: install docker-compose
+  #   apt:
+  #     name: docker-compose
+  #     state: latest
   
-  - name: make prometheus dir
-    file:
-      path: /prometheus/client
-      state: directory
-      recurse: yes
+  # - name: make prometheus dir
+  #   file:
+  #     path: /prometheus/client
+  #     state: directory
+  #     recurse: yes
 
-  - name: cp docker-compose.yml
-    copy:
-      src: prometheus/client/docker-compose.yml
-      dest: /home/prometheus/client/docker-compose.yml
+  # - name: cp docker-compose.yml
+  #   copy:
+  #     src: prometheus/client/docker-compose.yml
+  #     dest: /home/prometheus/client/docker-compose.yml
 
-  - name: run prometheus container
-    shell: docker-compose up -d chdir=/home/prometheus/client/docker-compose.yml
+  # - name: run prometheus container
+  #   shell: docker-compose up -d chdir=/home/prometheus/client/docker-compose.yml

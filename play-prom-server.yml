@@ -19,16 +19,26 @@
 
   - name: make prometheus dir
     file:
-      path: /prometheus/server
+      path: /home/prometheus/server
       state: directory
       recurse: yes
 
+  # - name: copy files
+  #   copy:
+  #     src: prometheus/server/docker-compose.yml
+  #     dest: /home/prometheus/server/docker-compose.yml
+
+  # - name: copy files
+  #   copy:
+  #     src: prometheus/server/prometheus.yml
+  #     dest: /home/prometheus/server/prometheus.yml
+  
   - name: copy files
     copy:
       src: "{{ item }}"
-      dest: /home/prometheus/server/
+      dest: /home/prometheus/server
     with_fileglob:
     - "prometheus/server/*"
 
   - name: run prometheus container
-    shell: docker-compose up -d chdir=/home/prometheus/server/docker-compose.yml
+    shell: docker-compose up -d chdir=/home/prometheus/server

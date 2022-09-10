@@ -10,3 +10,8 @@ cd Mr-Labkit
 ./install.sh
 ```
 - ターゲットノードは，Python3がインストールされていることと，公開鍵接続出来ることが前提
+- 変数をいじるファイルは以下
+    - inv.ini
+    - vars.yml
+    - files/nfs/exports
+    - files/prometheus/server/prometheus.yml
