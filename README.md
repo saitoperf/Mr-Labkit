@@ -10,13 +10,13 @@ cd Mr-Labkit
 ./install.sh
 ```
 - ターゲットノードは，Python3がインストールされていることと，公開鍵接続出来ることが前提
-- 変数をいじるファイルは以下
+- 変数をいじるファイルは以下(そのうち自動化したい)
     - inv.ini
     - vars.yml
     - files/nfs/exports
     - files/prometheus/server/prometheus.yml
 
 
-## メモ
+## 注意！
 - prometheusのデプロイはまだです！
 - nfsはまだコンテナ化されていません！(aptコマンドが使えるディストリビューションでのみ実行可能)
