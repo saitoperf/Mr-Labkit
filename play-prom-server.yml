@@ -20,7 +20,6 @@
   - name: make prometheus dir
     file:
       path: /opt/Mr-Labkit/prometheus/server
-      # path: /prometheus/server
       state: directory
       recurse: yes
 
@@ -38,7 +37,6 @@
     copy:
       src: "{{ item }}"
       dest: /opt/Mr-Labkit/prometheus/server
-      # dest: /home/prometheus/server
     with_fileglob:
     - "prometheus/server/*"
 

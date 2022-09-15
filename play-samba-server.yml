@@ -10,7 +10,6 @@
     copy: 
       src: samba/
       dest: /opt/Mr-Labkit/samba/
-      # dest: /home/samba/
   
   - name: make share directory
     file:
@@ -23,7 +22,6 @@
   - name: authorization for start.sh
     file:
       path: /opt/Mr-Labkit/samba/start.sh
-      # path: /home/samba/start.sh
       mode: a+x
   
   - name: build samba image

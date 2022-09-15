@@ -23,15 +23,12 @@
   - name: make docker dir
     file:
       path: /opt/Mr-Labkit/ldap
-      # path: /home/docker
       state: directory
 
   - name: cp docker-compose
     copy:
       src: ldap/docker-compose.yml
       dest: /opt/Mr-Labkit/ldap/
-      # dest: /home/docker/docker-compose.yml
   
   - name: run ldap container
     shell: docker-compose up -d chdir=/opt/Mr-Labkit/ldap
-    # shell: docker-compose up -d chdir=/home/docker
