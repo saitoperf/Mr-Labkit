@@ -19,6 +19,10 @@ cd Mr-Labkit
     - files/prometheus/server/prometheus.yml
         - `target`をご変更ください
 
+- `ServerIP:8080`でLDAPの管理画面にアクセス出来ます
+    - Login DN：cn=admin,dc=example,dc=com
+    - Password：admin
+
 ## 注意！
 - nfsはまだコンテナ化されていません！(aptコマンドが使えるディストリビューションでのみ実行可能)
 
