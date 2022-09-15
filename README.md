@@ -13,10 +13,19 @@ cd Mr-Labkit
 - 変数をいじるファイルは以下(そのうち自動化したい)
     - inv.ini
     - vars.yml
+        - `serverip`をサーバのIPアドレスにご変更ください
     - files/nfs/exports
+        - `192.168.122.0/255.255.255.0`を公開するセグメントにご変更ください
     - files/prometheus/server/prometheus.yml
-
+        - `target`をご変更ください
 
 ## 注意！
-- prometheusのデプロイはまだです！
 - nfsはまだコンテナ化されていません！(aptコマンドが使えるディストリビューションでのみ実行可能)
+
+## 今後の予定
+- nfsのコンテナ化 or playbook内でディストリビューションごとに分岐できるようにする
+- GitLabコンテナを立ててLDAP認証出来るようにする
+- terraformを用いたAWSへのデプロイ
+
+## お問い合わせ
+- メール：d203326@gmail.com
