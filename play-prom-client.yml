@@ -18,14 +18,17 @@
   
   - name: make prometheus dir
     file:
-      path: /prometheus/client
+      path: /opt/Mr-Labkit/prometheus/client
+      # path: /prometheus/client
       state: directory
       recurse: yes
 
   - name: cp docker-compose.yml
     copy:
       src: prometheus/client/docker-compose.yml
-      dest: /home/prometheus/client/docker-compose.yml
+      dest: /opt/Mr-Labkit/prometheus/client
+      # dest: /prometheus/client
 
   - name: run prometheus container
-    shell: docker-compose up -d chdir=/home/prometheus/client/docker-compose.yml
+    shell: docker-compose up -d chdir=/opt/Mr-Labkit/prometheus/client
+    # shell: docker-compose up -d chdir=/prometheus/client
