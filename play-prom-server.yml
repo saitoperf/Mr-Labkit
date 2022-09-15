@@ -19,7 +19,8 @@
 
   - name: make prometheus dir
     file:
-      path: /home/prometheus/server
+      path: /opt/Mr-Labkit/prometheus/server
+      # path: /prometheus/server
       state: directory
       recurse: yes
 
@@ -36,9 +37,10 @@
   - name: copy files
     copy:
       src: "{{ item }}"
-      dest: /home/prometheus/server
+      dest: /opt/Mr-Labkit/prometheus/server
+      # dest: /home/prometheus/server
     with_fileglob:
     - "prometheus/server/*"
 
   - name: run prometheus container
-    shell: docker-compose up -d chdir=/home/prometheus/server
+    shell: docker-compose up -d chdir=/opt/Mr-Labkit/prometheus/server

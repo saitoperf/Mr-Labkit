@@ -9,7 +9,8 @@
   - name: cp samba docker
     copy: 
       src: samba/
-      dest: /home/samba/
+      dest: /opt/Mr-Labkit/samba/
+      # dest: /home/samba/
   
   - name: make share directory
     file:
@@ -21,14 +22,15 @@
   
   - name: authorization for start.sh
     file:
-      path: /home/samba/start.sh
+      path: /opt/Mr-Labkit/samba/start.sh
+      # path: /home/samba/start.sh
       mode: a+x
   
   - name: build samba image
-    shell: docker build -t samba . chdir=/home/samba
+    shell: docker build -t samba . chdir=/opt/Mr-Labkit/samba/
   
   - name: run samba container
-    shell: docker-compose up -d chdir=/home/samba
+    shell: docker-compose up -d chdir=/opt/Mr-Labkit/samba/
   
   - name: Permission settings for shared directories
     file:
