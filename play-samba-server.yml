@@ -5,7 +5,6 @@
   - vars.yml
 
   tasks:
-  #sambaのインストール
   - name: cp samba docker
     copy: 
       src: samba/

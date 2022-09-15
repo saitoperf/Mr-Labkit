@@ -1,5 +1,4 @@
 ---
-# サーバ (hack12)
 - hosts: client
   gather_facts: true
   remote_user: "{{ user }}"
@@ -7,7 +6,6 @@
   - vars.yml
 
   tasks:
-  # 各サービスのインストール
   - name: install NFS
     apt:
       name: nfs-common
