@@ -1,5 +1,4 @@
 ---
-# サーバ (hack22)
 - hosts: server
   gather_facts: true
   remote_user: "{{ user }}"
@@ -22,16 +21,6 @@
       path: /opt/Mr-Labkit/prometheus/server
       state: directory
       recurse: yes
-
-  # - name: copy files
-  #   copy:
-  #     src: prometheus/server/docker-compose.yml
-  #     dest: /home/prometheus/server/docker-compose.yml
-
-  # - name: copy files
-  #   copy:
-  #     src: prometheus/server/prometheus.yml
-  #     dest: /home/prometheus/server/prometheus.yml
   
   - name: copy files
     copy:

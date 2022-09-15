@@ -1,5 +1,4 @@
 ---
-# サーバ (hack22)
 - hosts: server
   gather_facts: true
   remote_user: "{{ user }}"
