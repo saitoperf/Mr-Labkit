@@ -1,5 +1,6 @@
 # Mr-Labkit
-- 2022年9月10日 技育展 インフラセ/キュリティ 発表作品
+- 2022年9月10日／技育展／インフラ・セキュリティテーマ／発表作品
+    - [優秀賞受賞](https://talent.supporterz.jp/geekten/2022/exhibition.html#theme3)
 - [プレゼン資料](https://docs.google.com/presentation/d/1S5N9mMJPrSEZmwhkFLieLZNFTAQOk1g5)
 - [ver1](https://github.com/saitoperf/mini-lab)
 
