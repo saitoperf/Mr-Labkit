@@ -4,6 +4,7 @@ services:
   ldap-server:
     image: osixia/openldap:latest
     restart: always
+    hostname: 'ldap.example.com'
     container_name: ldap-host
     environment:
       LDAP_ORGANISATION: "saito_company"

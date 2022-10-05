@@ -6,4 +6,33 @@
   - vars.yml
 
   tasks:
-  - name: 
+  - name: install docker
+    apt:
+      name: docker
+      state: latest
+  
+  - name: Install docker-compose
+    apt:
+      name: docker-compose
+      state: latest
+
+  - name: Make docker dir
+    file:
+      path: /opt/Mr-Labkit/gitlab
+      state: directory
+
+  - name: cp docker-compose
+    copy:
+      src: gitlab/docker-compose.yml
+      dest: /opt/Mr-Labkit/gitlab/
+  
+  - name: Run gitlab container
+    shell: docker-compose up -d chdir=/opt/Mr-Labkit/gitlab
+
+  - name: Show default password
+    shell: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+    register: reg
+  - name:
+    debug:
+      msg: "{{ reg.stdout }}"
+
