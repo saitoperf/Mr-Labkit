@@ -3,10 +3,13 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
+    restart: always
+    hostname: 'prometheus.example.com'
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
+  
   node-exporter:
     image: quay.io/prometheus/node-exporter
     container_name: node-exporter
@@ -16,9 +19,12 @@ services:
       - ./proc:/host/proc
       - ./sys:/host/sys
       - ./rootfs:/rootfs
+  
   grafana:
     image: grafana/grafana
     container_name: grafana
+    restart: always
+    hostname: 'grafana.example.com'
     ports:
       - 3000:3000
   
