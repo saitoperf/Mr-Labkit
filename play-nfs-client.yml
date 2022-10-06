@@ -10,6 +10,7 @@
     apt:
       name: nfs-common
       state: latest
+  
   - name: mount
     mount:
       src: ldap-server:/home

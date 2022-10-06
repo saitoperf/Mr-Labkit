@@ -6,15 +6,20 @@
   - vars.yml
 
   tasks:
-  - name: install docker
+  - name: install package
     apt:
-      name: docker
-      state: latest
-  
-  - name: install docker-compose
-    apt:
-      name: docker-compose
-      state: latest
+      name: 
+      - docker
+      - docker-compose
+      - ldap-utils
+
+  - name: chmod "{{ user }}" -aG docker
+    user:
+      name: "{{ user }}"
+      state: present
+      groups:
+      - docker
+      append: yes
   
   - name: pull ldap image
     shell: docker pull osixia/openldap
@@ -24,10 +29,21 @@
       path: /opt/Mr-Labkit/ldap
       state: directory
 
-  - name: cp docker-compose
+  - name: cp files
     copy:
-      src: ldap/docker-compose.yml
-      dest: /opt/Mr-Labkit/ldap/
-  
-  - name: run ldap container
-    shell: docker-compose up -d chdir=/opt/Mr-Labkit/ldap
+      src: "{{ item }}"
+      dest: /opt/Mr-Labkit/ldap
+    with_fileglob:
+    - "ldap/*"
+
+  - name: docker compose
+    docker_compose:
+      project_src: /opt/Mr-Labkit/ldap
+      state: present
+
+  # 後で直す
+  - name: sleep
+    shell: sleep 5
+
+  - name: ldapadd init
+    shell: ldapadd -x -D cn=admin,dc=example,dc=com -w admin -f /opt/Mr-Labkit/ldap/init.ldif

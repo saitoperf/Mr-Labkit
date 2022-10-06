@@ -8,12 +8,18 @@
   tasks:
   - name: install docker
     apt:
-      name: docker
+      name: 
+      - docker
+      - docker-compose
       state: latest
-  - name: install docker-compose
-    apt:
-      name: docker-compose
-      state: latest
+
+  - name: chmod "{{ user }}" -aG docker
+    user:
+      name: "{{ user }}"
+      state: present
+      groups:
+      - docker
+      append: yes
   
   - name: make prometheus dir
     file:
@@ -26,5 +32,7 @@
       src: prometheus/client/docker-compose.yml
       dest: /opt/Mr-Labkit/prometheus/client
 
-  - name: run prometheus container
-    shell: docker-compose up -d chdir=/opt/Mr-Labkit/prometheus/client
+  - name: docker compose
+    docker_compose:
+      project_src: /opt/Mr-Labkit/prometheus/client
+      state: present
