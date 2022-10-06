@@ -8,12 +8,9 @@
   tasks:
   - name: install docker
     apt:
-      name: docker
-      state: latest
-  
-  - name: install docker-compose
-    apt:
-      name: docker-compose
+      name: 
+      - docker
+      - docker-compose
       state: latest
 
   - name: make prometheus dir

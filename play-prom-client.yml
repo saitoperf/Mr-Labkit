@@ -8,12 +8,18 @@
   tasks:
   - name: install docker
     apt:
-      name: docker
+      name: 
+      - docker
+      - docker-compose
       state: latest
-  - name: install docker-compose
-    apt:
-      name: docker-compose
+
+  - name: chmod "{{ user }} -aG docker"
+    user:
+      name: "{{ user }}"
       state: latest
+      groups:
+      - docker
+      append: yes
   
   - name: make prometheus dir
     file:
