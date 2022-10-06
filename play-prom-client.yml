@@ -32,5 +32,7 @@
       src: prometheus/client/docker-compose.yml
       dest: /opt/Mr-Labkit/prometheus/client
 
-  - name: run prometheus container
-    shell: docker-compose up -d chdir=/opt/Mr-Labkit/prometheus/client
+  - name: docker compose
+    docker_compose:
+      project_src: /opt/Mr-Labkit/prometheus/client
+      state: present

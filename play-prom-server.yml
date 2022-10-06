@@ -26,5 +26,7 @@
     with_fileglob:
     - "prometheus/server/*"
 
-  - name: run prometheus container
-    shell: docker-compose up -d chdir=/opt/Mr-Labkit/prometheus/server
+  - name: docker compose
+    docker_compose:
+      project_src: /opt/Mr-Labkit/prometheus/server
+      state: present

@@ -26,8 +26,10 @@
       src: gitlab/docker-compose.yml
       dest: /opt/Mr-Labkit/gitlab/
   
-  - name: Run gitlab container
-    shell: docker-compose up -d chdir=/opt/Mr-Labkit/gitlab
+  - name: docker compose
+    docker_compose:
+      project_src: /opt/Mr-Labkit/gitlab
+      state: present
 
   - name: Show default password
     shell: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
@@ -35,4 +37,3 @@
   - name:
     debug:
       msg: "{{ reg.stdout }}"
-

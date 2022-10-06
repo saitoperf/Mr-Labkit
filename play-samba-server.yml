@@ -23,11 +23,18 @@
       path: /opt/Mr-Labkit/samba/start.sh
       mode: a+x
   
-  - name: build samba image
-    shell: docker build -t samba . chdir=/opt/Mr-Labkit/samba/
+  - name: docker build
+    docker_image:
+      build:
+        path: /opt/Mr-Labkit/samba/
+      name: samba
+      source : build
+
   
-  - name: run samba container
-    shell: docker-compose up -d chdir=/opt/Mr-Labkit/samba/
+  - name: docker compose
+    docker_compose:
+      project_src: /opt/Mr-Labkit/samba/
+      state: present
   
   - name: Permission settings for shared directories
     file:
