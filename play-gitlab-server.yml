@@ -8,12 +8,9 @@
   tasks:
   - name: install docker
     apt:
-      name: docker
-      state: latest
-  
-  - name: Install docker-compose
-    apt:
-      name: docker-compose
+      name: 
+      - docker
+      - docker-compose
       state: latest
 
   - name: Make docker dir
@@ -31,9 +28,9 @@
       project_src: /opt/Mr-Labkit/gitlab
       state: present
 
-  - name: Show default password
-    shell: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
-    register: reg
-  - name:
-    debug:
-      msg: "{{ reg.stdout }}"
+  # - name: Show default password
+  #   shell: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+  #   register: reg
+  # - name:
+  #   debug:
+  #     msg: "{{ reg.stdout }}"
