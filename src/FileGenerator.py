@@ -6,7 +6,6 @@ class FileGenerator:
     def __init__(self, vars_yml):
         with open(vars_yml, 'r') as f:
             self.vars = (yaml.safe_load(f))
-        # print(self.vars['allip'][1])
 
     def replace_variable(self, filename):
         replaced = list()
@@ -18,11 +17,9 @@ class FileGenerator:
                 if '{{ serverip }}' in line:
                     line = line.replace('{{ serverip }}', self.vars['serverip'])
                 if '{{ clientip }}' in line:
-                    line = line.replace('{{ clientip }}', self.vars['clientip'])
-                if '{{ allip }}' in line:
-                    tmp = line  # tmp：リプレース後の文字列、line：変数で記述されている文字列
-                    for ip in self.vars['allip']:
-                        tmp = line.replace('{{ allip }}', ip)
+                    for ip in self.vars['clientip']:
+                        # tmp：リプレース後の文字列、line：変数で記述されている文字列
+                        tmp = line.replace('{{ clientip }}', ip)
                         replaced.append(tmp)
                     continue
                 if '{{ subnet }}' in line:
