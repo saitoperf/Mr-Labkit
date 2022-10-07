@@ -8,41 +8,42 @@
 ```sh
 git clone https://github.com/saitoperf/Mr-Labkit.git
 cd Mr-Labkit/src
-./install.sh
+# 設定ファイルに vars.yml の情報を適用します
+./FileGenerator.py
+# Mr.Labkitを実行します
+./Run.sh
 ```
-- 前提条件：
-    - ターゲットノードにPython3がインストールされていること
-    - 公開鍵接続が出来ること
-- 変数をいじるファイルは以下(jinja2等を使ってそのうち自動化したい)
-    - inv.ini
-    - vars.yml
-        - `serverip`をサーバのIPアドレスにご変更ください
-    - files/nfs/exports
-        - `192.168.122.0/255.255.255.0`を公開するセグメントにご変更ください
-    - files/prometheus/server/prometheus.yml
-        - `target`をご変更ください
-- 各種サービスへのアクセス(ServerIPはそのうちドメインで指定できるようにしたい)
-    - `ServerIP:8080`：LDAP管理画面
-        - Login DN：cn=admin,dc=example,dc=com
-        - Password：admin
-    - `ServerIP:8929`：GitLab
-        - 初期のユーザ名とパスワードは[こちら](https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-engine)をご参照ください
-        - Username or email：root
-        - Password：`docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password`
-    - `ServerIP:3000`：Grafana
-        - Email or username：admin
-        - Password：admin
-    - `ServerIP:9090`：Prometheus
+- 事前準備：
+    - 全てのノードにPython3をインストールしてください
+    - コントロールノードからターゲットノードに公開鍵接続が出来るようにしてください
+    - `src/vars.yml`を編集してください
+
+## 各種サービスへのアクセス
+- (ServerIPはそのうちドメインで指定できるようにしたい)
+- `ServerIP:8080`：LDAP管理画面
+    - Login DN：cn=admin,dc=example,dc=com
+    - Password：admin
+- `ServerIP:8929`：GitLab
+    - 初期のユーザ名とパスワードは[こちら](https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-engine)をご参照ください
+    - Username or email：root
+    - Password：`docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password`
+- `ServerIP:3000`：Grafana
+    - Email or username：admin
+    - Password：admin
+- `ServerIP:9090`：Prometheus
 
 ## 注意！
 - nfsはまだコンテナ化されていません！(aptコマンドが使えるディストリビューションでのみ実行可能)
+    - ubuntu20.04でのみ動作確認
+- ホームディレクトリを作る場合は、サーバPCで最初にログインする必要があります
+    - 問題調査中
 
 ## 今後の予定
 - nfsのコンテナ化 or playbook内でディストリビューションごとに分岐できるようにする
-- GitLabコンテナを立ててLDAP認証出来るようにする
-- jinja2を使って設定ファイル内のIPアドレスを変数化する
+- GitLabコンテナで、LDAP認証出来るようにする
 - Latexの自動ビルド機能の追加(CIパイプラインの作成)
-- 
+- VPN機能
+- DNS機能
 
 ## お問い合わせ
 - メール：d203326@gmail.com

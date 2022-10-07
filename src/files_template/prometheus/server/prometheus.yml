@@ -6,5 +6,5 @@ scrape_configs: # 監視対象ごとの設定
 - job_name: 'node-exporter'
   static_configs:
   - targets: 
-    - '192.168.122.15:9100'
-    - '192.168.122.16:9100'
+    - '{{ serverip }}:9100'
+    - '{{ clientip }}:9100'
