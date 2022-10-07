@@ -1,0 +1,39 @@
+version: '3.6'
+services:
+  web:
+    image: 'gitlab/gitlab-ee:latest'
+    restart: always
+    hostname: 'gitlab.example.com'
+    container_name: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # gitlab
+        external_url 'http://192.168.122.15:8929'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        nginx['listen_port'] = 80 
+
+        # LDAP
+        gitlab_rails['ldap_enabled'] = true
+        gitlab_rails['ldap_servers'] = {
+          'main' => {
+            'label' => 'LDAP',
+            'host' => '192.168.122.15',
+            'port' => 389,
+            'uid' => 'uid',
+            'encryption' => 'plain',
+            'active_directory' => false,
+            'allow_username_or_email_login' => false,
+            'base' => 'ou=People,dc=example,dc=com',
+            'bind_dn' => 'cn=admin,dc=example,dc=com',
+            'password' => 'admin'
+          }
+        }
+
+    ports:
+      - '8929:80'
+      - '2224:22'
+    volumes:
+      - '$GITLAB_HOME/config:/etc/gitlab'
+      - '$GITLAB_HOME/logs:/var/log/gitlab'
+      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    shm_size: '256m'

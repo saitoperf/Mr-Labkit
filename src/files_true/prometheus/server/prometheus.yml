@@ -3,8 +3,10 @@ global:
   external_labels: # 外部と通信するときのラベル
     monitor: 'codelab-monitor'
 scrape_configs: # 監視対象ごとの設定
-- job_name: 'node-exporter'
-  static_configs:
-  - targets: 
-    - '192.168.122.15:9100'
-    - '192.168.122.16:9100'
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: 
+        - '192.168.122.15:9100'
+        - '192.168.122.16:9100'
+        # - '133.15.45.45:9100'
+        # - '133.15.45.46:9100'

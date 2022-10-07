@@ -1,8 +1,9 @@
-# user: taiki
-# # サーバのIPアドレス
-# serverip: 133.15.45.46
-
-
+# FileGenerator.pyで読み込むファイル
 user: saito
-# サーバのIPアドレス
-serverip: 192.168.122.15
+serverip: '192.168.122.15'
+clientip: '192.168.122.16'
+allip:
+- '192.168.122.15'
+- '192.168.122.16'
+subnet: '192.168.122.0'
+subnetmask: '255.255.255.0'

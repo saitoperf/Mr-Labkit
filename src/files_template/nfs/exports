@@ -1,0 +1,1 @@
+/home   {{ subnet }}/{{ subnetmask }}(rw,sync,no_subtree_check)

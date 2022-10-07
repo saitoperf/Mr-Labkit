@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  samba:
+    image: samba
+    container_name: samba
+    ports:
+      - "445:445"
+      - "139:139"
+    tty: true
+    volumes:
+      - /home/lab/:/home/lab

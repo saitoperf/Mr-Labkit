@@ -14,13 +14,15 @@ cd Mr-Labkit/src
     - ターゲットノードにPython3がインストールされていること
     - 公開鍵接続が出来ること
 - 変数をいじるファイルは以下(jinja2等を使ってそのうち自動化したい)
-    - inv.ini
-    - vars.yml
+    - src/inv.ini
+    - src/vars.yml
         - `serverip`をサーバのIPアドレスにご変更ください
-    - files/nfs/exports
+    - src/files/nfs/exports
         - `192.168.122.0/255.255.255.0`を公開するセグメントにご変更ください
-    - files/prometheus/server/prometheus.yml
+    - src/files/prometheus/server/prometheus.yml
         - `target`をご変更ください
+    - src/files/gitlab/docker-compose.yml
+    
 - 各種サービスへのアクセス(ServerIPはそのうちドメインで指定できるようにしたい)
     - `ServerIP:8080`：LDAP管理画面
         - Login DN：cn=admin,dc=example,dc=com
