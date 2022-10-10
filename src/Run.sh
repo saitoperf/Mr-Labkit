@@ -1,14 +1,14 @@
 #!/bin/bash
 
-ansible-playbook -bK -i inv.ini \
-    play-ldap-server.yml \
-    play-sssd-client.yml \
-    play-samba-server.yml \
-    play-prom-server.yml \
-    play-prom-client.yml \
-    play-nfs-server.yml \
-    play-nfs-client.yml \
-    play-gitlab-server.yml
+# ansible-playbook -bK -i inv.ini \
+#     play-ldap-server.yml \
+#     play-sssd-client.yml \
+#     play-samba-server.yml \
+#     play-prom-server.yml \
+#     play-prom-client.yml \
+#     play-nfs-server.yml \
+#     play-nfs-client.yml \
+#     play-gitlab-server.yml
 
 # ansible-playbook -bK -i inv.ini play-ldap-server.yml
 # ansible-playbook -bK -i inv.ini play-sssd-client.yml
