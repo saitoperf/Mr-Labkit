@@ -8,7 +8,7 @@
 ```sh
 git clone https://github.com/saitoperf/Mr-Labkit.git
 cd Mr-Labkit/src
-# 設定ファイルに vars.yml の情報を適用します
+# vars.yml を編集した後に実行してください
 ./FileGenerator.py
 # Mr.Labkitを実行します
 ./Run.sh
@@ -47,3 +47,4 @@ cd Mr-Labkit/src
 
 ## お問い合わせ
 - メール：d203326@gmail.com
+- コメント大歓迎です！お気軽にどうぞ！
