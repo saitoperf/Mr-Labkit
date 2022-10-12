@@ -9,17 +9,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - '9090:9090'
-  
-  node-exporter:
-    image: quay.io/prometheus/node-exporter
-    container_name: node-exporter
-    ports:
-      - 9100:9100
-    volumes:
-      - ./proc:/host/proc
-      - ./sys:/host/sys
-      - ./rootfs:/rootfs
-  
+
   grafana:
     image: grafana/grafana
     container_name: grafana

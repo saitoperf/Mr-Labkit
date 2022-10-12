@@ -20,3 +20,10 @@ ansible-playbook -bK -i inv.ini \
 # ansible-playbook -bK -i inv.ini play-nfs-server.yml
 # ansible-playbook -bK -i inv.ini play-nfs-client.yml
 # ansible-playbook -bK -i inv.ini play-gitlab-server.yml
+
+# 冪等性
+## ok
+### ldap, gitlab
+
+## not
+###

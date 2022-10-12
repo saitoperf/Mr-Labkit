@@ -9,7 +9,7 @@
     copy: 
       src: samba/
       dest: /opt/Mr-Labkit/samba/
-  
+
   - name: make share directory
     file:
       path: /home/lab

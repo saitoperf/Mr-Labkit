@@ -17,11 +17,11 @@
   #     state: enabled
   #     enabled: true
   
-  # 設定ファイルの適用
-  - name: configure NFS
+  # 設定ファイルのコピー
+  - name: copy files
     copy:
       src: nfs/exports
       dest: /etc/exports
-
+  # 設定ファイルの適用
   - name: export file-system
     command: exportfs -a

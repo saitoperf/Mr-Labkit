@@ -40,9 +40,10 @@
 
   # 後で直す
   - name: sleep
-    shell: sleep 5
+    command: sleep 5
 
+  # すでにエントリがある場合に"コード68"を返す
   - name: ldapadd init
-    shell: ldapadd -x -D cn=admin,dc=example,dc=com -w admin -f /opt/Mr-Labkit/ldap/init.ldif
+    command: ldapadd -x -D cn=admin,dc=example,dc=com -w admin -f /opt/Mr-Labkit/ldap/init.ldif
     register: ret
     failed_when: ret.rc not in [0, 68]

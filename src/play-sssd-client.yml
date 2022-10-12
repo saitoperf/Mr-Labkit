@@ -13,7 +13,13 @@
       state: latest
 
   # 設定ファイルの適用
+  - name:
+    shell: cat /etc/hosts | grep ldap-server
+    ignore_errors: yes
+    register: ret
+  # /etc/hostsにldap-serverの文字列がないなら実行
   - name: add hosts
+    when: ret.rc not in [0]
     shell: echo {{ serverip }} ldap-server >> /etc/hosts
   
   - name: configure sssd
