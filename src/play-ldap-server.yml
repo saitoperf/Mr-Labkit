@@ -44,3 +44,5 @@
 
   - name: ldapadd init
     shell: ldapadd -x -D cn=admin,dc=example,dc=com -w admin -f /opt/Mr-Labkit/ldap/init.ldif
+    register: ret
+    failed_when: ret.rc not in [0, 68]
