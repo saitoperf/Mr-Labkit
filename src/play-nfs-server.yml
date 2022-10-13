@@ -1,6 +1,6 @@
 ---
 - hosts: server
-  gather_facts: true
+  gather_facts: yes
   remote_user: "{{ user }}"
   vars_files:
   - vars.yml
@@ -15,13 +15,13 @@
   #   service:
   #     name: nfs-kernel-server
   #     state: enabled
-  #     enabled: true
+  #     enabled: yes
   
-  # 設定ファイルの適用
-  - name: configure NFS
+  # 設定ファイルのコピー
+  - name: copy files
     copy:
       src: nfs/exports
       dest: /etc/exports
-
+  # 設定ファイルの適用
   - name: export file-system
     command: exportfs -a

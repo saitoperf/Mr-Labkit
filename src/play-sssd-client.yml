@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  gather_facts: true
+  gather_facts: yes
   remote_user: "{{ user }}"
   vars_files:
   - vars.yml
@@ -13,7 +13,13 @@
       state: latest
 
   # 設定ファイルの適用
+  - name:
+    shell: cat /etc/hosts | grep ldap-server
+    ignore_errors: yes
+    register: ret
+  # /etc/hostsにldap-serverの文字列がないなら実行
   - name: add hosts
+    when: ret.rc not in [0]
     shell: echo {{ serverip }} ldap-server >> /etc/hosts
   
   - name: configure sssd
@@ -30,7 +36,7 @@
     service:
       name: sssd
       state: restarted
-      enabled: true
+      enabled: yes
   
   - name: auto make home dir
     command: pam-auth-update --enable mkhomedir

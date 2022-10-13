@@ -1,6 +1,6 @@
 ---
 - hosts: server
-  gather_facts: true
+  gather_facts: yes
   remote_user: "{{ user }}"
   vars_files:
   - vars.yml
@@ -29,7 +29,7 @@
       state: present
 
   # - name: Show default password
-  #   shell: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
+  #   command: docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password
   #   register: reg
   # - name:
   #   debug:
