@@ -1,21 +1,21 @@
 ---
-- hosts: server
+- hosts: all
   gather_facts: yes
 
   tasks:
-  - name: Remove file (delete file)
+  - name: delete file
     file:
       path: /etc/netplan/01-netcfg.yaml
       state: absent
 
   - name: 
     command: resolvectl dns eth1 8.8.8.8
-  
+
   - name: 
     command: netplan apply
 
-  - name:
-    apt:
-      name:
-      - net-tools
-      state: latest
+  # - name:
+  #   apt:
+  #     name:
+  #     - net-tools
+  #     state: latest

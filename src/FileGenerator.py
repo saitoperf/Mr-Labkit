@@ -38,14 +38,18 @@ if __name__ == '__main__':
     fg = FileGenerator("vars.yml")
 
     # ファイル生成
-    replaced = fg.replace_variable('./files_template/gitlab/docker-compose.yml')
+    replaced = fg.replace_variable('./template/gitlab/docker-compose.yml')
     fg.out_file(replaced, './files/gitlab/docker-compose.yml')
     
-    replaced = fg.replace_variable('./files_template/nfs/exports')
+    replaced = fg.replace_variable('./template/nfs/exports')
     fg.out_file(replaced, './files/nfs/exports')
     
-    replaced = fg.replace_variable('./files_template/prometheus/server/prometheus.yml')
+    replaced = fg.replace_variable('./template/prometheus/server/prometheus.yml')
     fg.out_file(replaced, './files/prometheus/server/prometheus.yml')
     
-    replaced = fg.replace_variable('./files_template/inv.ini')
+    replaced = fg.replace_variable('./template/inv.ini')
     fg.out_file(replaced, './inv.ini')
+    
+    replaced = fg.replace_variable('./template/Vagrantfile')
+    fg.out_file(replaced, './Vagrantfile')
+

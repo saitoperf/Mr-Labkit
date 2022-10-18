@@ -13,7 +13,7 @@
       - docker-compose
       state: latest
 
-  - name: chmod "{{ user }}" -aG docker
+  - name: chmod {{ user }} -aG docker
     user:
       name: "{{ user }}"
       state: present

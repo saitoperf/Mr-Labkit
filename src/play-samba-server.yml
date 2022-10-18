@@ -23,12 +23,15 @@
       path: /opt/Mr-Labkit/samba/start.sh
       mode: a+x
   
-  - name: docker build
-    docker_image:
-      build:
-        path: /opt/Mr-Labkit/samba/
-      name: samba
-      source : build
+  - name: build samba image
+    shell: docker build -t samba . --network host chdir=/opt/Mr-Labkit/samba/
+  # --network hostがない
+  # - name: build samba image
+  #   docker_image:
+  #     build:
+  #       path: /opt/Mr-Labkit/samba/
+  #     name: samba
+  #     source : build
 
   - name: docker compose
     docker_compose:
