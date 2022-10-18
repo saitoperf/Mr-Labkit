@@ -1,0 +1,31 @@
+Vagrant.configure("2") do |config|
+    config.vm.box = "generic/ubuntu2004"
+    config.vm.provider "libvirt" do |lv|
+        lv.memory = "8192"
+        lv.cpus = 4
+    end
+    config.ssh.guest_port = 22
+    config.ssh.username = "vagrant"
+    # config.vm.network :forwarded_port, host: 80, guest: 80
+    # config.vm.network :forwarded_port, host: 8080, guest: 8080
+    
+    config.vm.define :ubuntu01 do |server|
+        server.vm.hostname = "ubuntu01"
+        server.vm.network :public_network, 
+            :dev => "virbr0",
+            :mode => "bridge",
+            :type => "bridge",
+            :ip => "192.168.122.11"
+        # server.ssh.host = "192.168.122.11"
+    end
+     
+    config.vm.define :ubuntu02 do |server|
+        server.vm.hostname = "ubuntu02"
+        server.vm.network :public_network, 
+            :dev => "virbr0",
+            :mode => "bridge",
+            :type => "bridge",
+            :ip => "192.168.122.12"
+        # server.ssh.host = "192.168.122.12"
+    end
+  end

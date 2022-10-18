@@ -30,7 +30,6 @@
       name: samba
       source : build
 
-  
   - name: docker compose
     docker_compose:
       project_src: /opt/Mr-Labkit/samba/

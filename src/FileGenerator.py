@@ -11,15 +11,15 @@ class FileGenerator:
         replaced = list()
         with open(filename, 'r') as f:
             for line in f:
-                # line = line.replace('\n', '')
                 if '{{ user }}' in line:
                     line = line.replace('{{ user }}', self.vars['user'])
                 if '{{ serverip }}' in line:
                     line = line.replace('{{ serverip }}', self.vars['serverip'])
                 if '{{ clientip }}' in line:
-                    for ip in self.vars['clientip']:
-                        # tmp：リプレース後の文字列、line：変数で記述されている文字列
+                    for i, ip in enumerate(self.vars['clientip']):
                         tmp = line.replace('{{ clientip }}', ip)
+                        if '{{ num }}' in line:
+                            tmp = tmp.replace('{{ num }}', str(i+1))
                         replaced.append(tmp)
                     continue
                 if '{{ subnet }}' in line:
