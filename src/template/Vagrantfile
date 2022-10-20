@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
         lv.memory = "8192"
         lv.cpus = 4
     end
-    
+
     config.vm.define :s1 do |server|
         server.vm.hostname = "s1"
         server.vm.network :public_network, 
@@ -15,13 +15,6 @@ Vagrant.configure("2") do |config|
             :type => "bridge",
             :ip => "{{ serverip }}"
     end
-     
-    config.vm.define :c1 do |server|
-        server.vm.hostname = "c1"
-        server.vm.network :public_network, 
-            :dev => "virbr0",
-            :mode => "bridge",
-            :type => "bridge",
-            :ip => "{{ clientip }}"
-    end 
+
+    {{ client }}
 end
