@@ -21,18 +21,20 @@ elif [ "$1" = 'nfs-server' ]; then
     ansible-playbook -bK -i inv.ini play-nfs-server.yml
 elif [ "$1" = 'nfs-client' ]; then
     ansible-playbook -bK -i inv.ini play-nfs-client.yml
+    sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
 elif [ "$1" = 'gitlab' ]; then
     ansible-playbook -bK -i inv.ini play-gitlab-server.yml
 elif [ "$1" = 'all' ]; then
     ansible-playbook -bK -i inv.ini \
-    play-ldap-server.yml \
-    play-sssd-client.yml \
-    play-samba-server.yml \
-    play-prom-server.yml \
-    play-prom-client.yml \
-    play-nfs-server.yml \
-    play-nfs-client.yml \
-    play-gitlab-server.yml
+        play-ldap-server.yml \
+        play-sssd-client.yml \
+        play-samba-server.yml \
+        play-prom-server.yml \
+        play-prom-client.yml \
+        play-gitlab-server.yml \
+        play-nfs-server.yml \
+        play-nfs-client.yml
+    sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
 else
     echo 'Usage: ./run.sh [OPTION]'
     echo 'options'
