@@ -4,3 +4,4 @@ src/files/prometheus/server/prometheus.yml
 inv.ini
 src/.vagrant
 src/kvm.sh
+src/Vagrantfile
