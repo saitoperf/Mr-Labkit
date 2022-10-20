@@ -52,7 +52,7 @@ class InvFile(NomalFile):
                 for i in range(self.vars['client']['nodes']):
                     ip = ipaddress.ip_address(int(ipaddress.ip_address(self.vars['client']['offset']))+i)
                     new_replaced.append('c' + str(i+1) + ' ansible_host=' + str(ip) + '\n')
-                    new_replaced.append('c' + str(i+1) + ' ansible_ssh_private_key_file="vagrant/.vagrant/machines/c' + str(i+1) + '/libvirt/private_key"\n')
+                    new_replaced.append('c' + str(i+1) + ' ansible_ssh_private_key_file=".vagrant/machines/c' + str(i+1) + '/libvirt/private_key"\n')
                 continue
             new_replaced.append(line)
         return new_replaced
@@ -64,13 +64,14 @@ class VagrantFile(NomalFile):
         for line in replaced:
             if '{{ client }}' in line:
                 new_replaced.append('    (0..' + str(self.vars['client']['nodes']-1) + ').each do |i|'+'\n')
-                new_replaced.append('        config.vm.define "c#{i}" do |host|'+'\n')
+                new_replaced.append('        config.vm.define "c#{i+1}" do |host|'+'\n')
+                new_replaced.append('            ip = "' + str(self.vars['client']['offset']) + '".split(".")[3].to_i + i'+'\n')
                 new_replaced.append('            host.vm.hostname = "c#{i+1}"'+'\n')
                 new_replaced.append('            host.vm.network :public_network, '+'\n')
                 new_replaced.append('               :dev => "virbr0",'+'\n')
                 new_replaced.append('               :mode => "bridge",'+'\n')
                 new_replaced.append('               :type => "bridge",'+'\n')
-                new_replaced.append('               :ip => "192.168.122.#{i}"'+'\n')
+                new_replaced.append('               :ip => "192.168.122.#{ip}"'+'\n')
                 new_replaced.append('        end'+'\n')
                 new_replaced.append('    end'+'\n')
                 continue

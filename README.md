@@ -9,9 +9,14 @@
 git clone https://github.com/saitoperf/Mr-Labkit.git
 cd Mr-Labkit/src
 # vars.yml を編集した後に実行してください
-./FileGenerator.py
-# Mr.Labkitを実行します
-./Run.sh
+./run.sh generate
+# vagrantを使ってVMを準備します
+./run.sh vagrant
+# 構成ファイルを適用します
+./run.sh all
+# NFSマウントによってクライアント公開鍵が置き換えられたので、
+# inv.iniの秘密鍵のディレクトリを修正
+sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
 ```
 - 事前準備：
     - 全てのノードにPython3をインストールしてください
