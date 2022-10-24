@@ -1,7 +1,7 @@
-src/files/gitlab/docker-compose.yml
-src/files/nfs/exports
-src/files/prometheus/server/prometheus.yml
-./inv.ini
-src/.vagrant
-src/kvm.sh
-src/Vagrantfile
+./src/files/gitlab/docker-compose.yml
+./src/files/nfs/exports
+./src/files/prometheus/server/prometheus.yml
+./src/inv.ini
+./src/.vagrant
+./src/kvm.sh
+./src/Vagrantfile
