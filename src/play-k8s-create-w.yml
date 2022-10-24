@@ -1,0 +1,11 @@
+---
+- hosts: k8s_worker
+  gather_facts: yes
+  remote_user: "vagrant"
+  vars_files:
+  - vars.yml
+  - vars-k8s.yml
+
+  tasks:
+  - name: join cluster
+    shell: kubeadm join 192.168.122.31:6443 --token {{ token }} --discovery-token-ca-cert-hash sha256:{{ hash }}

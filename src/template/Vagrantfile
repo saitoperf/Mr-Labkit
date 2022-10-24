@@ -16,7 +16,22 @@ Vagrant.configure("2") do |config|
             :ip => "{{ serverip }}"
     end
 
+    # ベアメタルのクライアント
     {{ client }}
+
+    # k8sマスター
+    config.vm.define :km1 do |server|
+        server.vm.hostname = "km1"
+        server.vm.network :public_network, 
+            :dev => "virbr0",
+            :mode => "bridge",
+            :type => "bridge",
+            :ip => "{{ k8s_masterip }}"
+    end
+
+    # k8sワーカー
+    {{ k8s_worker }}
+
 end
 
 # (0..2).each do |i|

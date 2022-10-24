@@ -20,6 +20,10 @@ class NomalFile:
                     line = line.replace('{{ subnet }}', self.vars['subnet'])
                 if '{{ subnetmask }}' in line:
                     line = line.replace('{{ subnetmask }}', self.vars['subnetmask'])
+                if '{{ k8s_masterip }}' in line:
+                    line = line.replace('{{ k8s_masterip }}', self.vars['k8s']['masterip'])
+                if '{{ gateway }}' in line:
+                    line = line.replace('{{ gateway }}', self.vars['gateway'])
                 replaced.append(line)
         return replaced
     
@@ -44,36 +48,65 @@ class PromFile(NomalFile):
 
 
 class InvFile(NomalFile):
+    def add(self, new_replaced, nodes, offset, hostname):
+        for i in range(nodes):
+            ip = ipaddress.ip_address(int(ipaddress.ip_address(offset))+i)
+            new_replaced.append(hostname + str(i+1) + ' ansible_host=' + str(ip) + '\n')
+            new_replaced.append(hostname + str(i+1) + ' ansible_ssh_private_key_file=".vagrant/machines/'+ hostname + str(i+1) + '/libvirt/private_key"\n')
     def replace_variable(self, filename):
         replaced = super().replace_variable(filename)
         new_replaced = list()
         for line in replaced:
             if '{{ client }}' in line:
-                for i in range(self.vars['client']['nodes']):
-                    ip = ipaddress.ip_address(int(ipaddress.ip_address(self.vars['client']['offset']))+i)
-                    new_replaced.append('c' + str(i+1) + ' ansible_host=' + str(ip) + '\n')
-                    new_replaced.append('c' + str(i+1) + ' ansible_ssh_private_key_file=".vagrant/machines/c' + str(i+1) + '/libvirt/private_key"\n')
+                self.add(
+                    new_replaced=new_replaced,
+                    nodes=self.vars['client']['nodes'], 
+                    offset=self.vars['client']['offset'], 
+                    hostname='c'
+                )
+                continue
+            if '{{ k8s_worker }}' in line:
+                self.add(
+                    new_replaced=new_replaced,
+                    nodes=self.vars['k8s']['worker']['nodes'], 
+                    offset=self.vars['k8s']['worker']['offset'], 
+                    hostname='kw'
+                )
                 continue
             new_replaced.append(line)
         return new_replaced
 
 class VagrantFile(NomalFile):
+    def add(self, new_replaced, nodes, offset, hostname):
+        new_replaced.append('    (0..' + str(nodes-1) + ').each do |i|'+'\n')
+        new_replaced.append('        config.vm.define "' + hostname + '#{i+1}" do |server|'+'\n')
+        new_replaced.append('            ip = "' + offset + '".split(".")[3].to_i + i'+'\n')
+        new_replaced.append('            server.vm.hostname = "' + hostname + '#{i+1}"'+'\n')
+        new_replaced.append('            server.vm.network :public_network, '+'\n')
+        new_replaced.append('               :dev => "virbr0",'+'\n')
+        new_replaced.append('               :mode => "bridge",'+'\n')
+        new_replaced.append('               :type => "bridge",'+'\n')
+        new_replaced.append('               :ip => "192.168.122.#{ip}"'+'\n')   # ここ変えたい
+        new_replaced.append('        end'+'\n')
+        new_replaced.append('    end'+'\n')
     def replace_variable(self, filename):
         replaced = super().replace_variable(filename)
         new_replaced = list()
         for line in replaced:
             if '{{ client }}' in line:
-                new_replaced.append('    (0..' + str(self.vars['client']['nodes']-1) + ').each do |i|'+'\n')
-                new_replaced.append('        config.vm.define "c#{i+1}" do |host|'+'\n')
-                new_replaced.append('            ip = "' + str(self.vars['client']['offset']) + '".split(".")[3].to_i + i'+'\n')
-                new_replaced.append('            host.vm.hostname = "c#{i+1}"'+'\n')
-                new_replaced.append('            host.vm.network :public_network, '+'\n')
-                new_replaced.append('               :dev => "virbr0",'+'\n')
-                new_replaced.append('               :mode => "bridge",'+'\n')
-                new_replaced.append('               :type => "bridge",'+'\n')
-                new_replaced.append('               :ip => "192.168.122.#{ip}"'+'\n')
-                new_replaced.append('        end'+'\n')
-                new_replaced.append('    end'+'\n')
+                self.add(
+                    new_replaced=new_replaced, 
+                    nodes=self.vars['client']['nodes'], 
+                    offset=self.vars['client']['offset'], 
+                    hostname='c')
+                continue
+            if '{{ k8s_worker }}' in line:
+                self.add(
+                    new_replaced=new_replaced,
+                    nodes=self.vars['k8s']['worker']['nodes'], 
+                    offset=self.vars['k8s']['worker']['offset'], 
+                    hostname='kw'
+                )
                 continue
             new_replaced.append(line)
         return new_replaced
@@ -91,6 +124,12 @@ if __name__ == '__main__':
     
     replaced = nomalfile.replace_variable('./template/nfs/exports')
     nomalfile.out_file(replaced, './files/nfs/exports')
+
+    replaced = nomalfile.replace_variable('./template/play-k8s-create-w.yml')
+    nomalfile.out_file(replaced, './play-k8s-create-w.yml')
+
+    replaced = nomalfile.replace_variable('./template/play-vagrant.yml')
+    nomalfile.out_file(replaced, './play-vagrant.yml')
     
     replaced = promfile.replace_variable('./template/prometheus/server/prometheus.yml')
     nomalfile.out_file(replaced, './files/prometheus/server/prometheus.yml')
@@ -100,4 +139,3 @@ if __name__ == '__main__':
     
     replaced = vagrantfile.replace_variable('./template/Vagrantfile')
     vagrantfile.out_file(replaced, './Vagrantfile')
-

@@ -1,0 +1,26 @@
+---
+- hosts:
+  - k8s_master
+  gather_facts: yes
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml
+
+  tasks:
+  - name:
+    become: true
+    # become_user: "{{ user }}"
+    shell: kubeadm reset -f
+
+  - name: restart docker
+    service:
+      name: docker
+      state: restarted
+      enabled: yes
+
+  - name: 
+    file:
+      path:
+      - /etc/cni/net.d
+      - /home/{{ user }}/.kube/config
+      state: absent

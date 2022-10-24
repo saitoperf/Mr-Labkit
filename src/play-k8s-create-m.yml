@@ -1,0 +1,84 @@
+---
+- hosts: k8s_master
+  gather_facts: yes
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml
+
+  tasks:
+  - name: apt install kubectl
+    apt: 
+      name:
+      - kubectl
+      state: latest
+  - name: copy kubeadm-config.yaml
+    copy: 
+      src: k8s/kubeadm-config.yaml
+      dest: ./
+  
+  # kubeadm init
+  - name: kubeadm reset -f
+    shell: kubeadm reset -f
+  - name: restart docker
+    service:
+      name: docker
+      state: restarted
+  - name: kubeadm init
+    shell: kubeadm init --config kubeadm-config.yaml
+
+  - name:
+    file:
+      path: /home/{{ user }}/.kube
+      state: directory
+  - name:
+    copy:
+      src: /etc/kubernetes/admin.conf
+      dest: /home/{{ user }}/.kube/config
+      remote_src: true
+  - name: chown config
+    shell: chown $(id -u):$(id -g) /home/{{ user }}/.kube/config
+
+# ここでワーカの設定が入る
+# tokenが欲しい
+# kubeadm token list
+  - name: touch vars-k8s.yml
+    shell: "echo -n 'hash: ' > /home/{{ user }}/vars-k8s.yml"
+  - name: get hash
+    shell: >-
+      openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | 
+      openssl rsa -pubin -outform der 2>/dev/null | 
+      openssl dgst -sha256 -hex | 
+      sed 's/^.* //' >> /home/{{ user }}/vars-k8s.yml
+    # register: hash
+  # - name: debug result hash
+  #   debug: 
+  #     var: hash['stdout']
+  - name: echo 
+    shell: "echo -n 'token: ' >> /home/{{ user }}/vars-k8s.yml"
+  - name: get token
+    shell: kubeadm token list | awk 'NR==2 {print $1}' >> /home/{{ user }}/vars-k8s.yml
+    # register: token
+  # - name: debug result token
+  #   debug: 
+  #     var: token['stdout']
+  # - name: fetch hash
+  #   fetch:
+  #     src: /home/{{ user }}/hash
+  #     dest: files/k8s/hash
+  #     flat: true
+  # - name: fetch token
+  #   fetch:
+  #     src: /home/{{ user }}/token
+  #     dest: files/k8s/token
+  #     flat: true
+  - name: fetch vars-k8s.yml
+    fetch:
+      src: /home/{{ user }}/vars-k8s.yml
+      dest: vars-k8s.yml
+      flat: true
+
+  # ポッドネットワークを作ってからjoinする
+  - name: install container network
+    become: true
+    become_user: "{{ user }}"
+    shell: kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml

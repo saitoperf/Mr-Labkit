@@ -1,0 +1,11 @@
+# kubeadm-config.yaml
+# cgroupDriverとpodネットワークの設定
+kind: ClusterConfiguration
+apiVersion: kubeadm.k8s.io/v1beta3
+# kubernetesVersion: v1.24.1
+networking:
+  podSubnet: "172.24.0.0/16" # --pod-network-cidr(10.244.0.0/16はダメ)
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: cgroupfs

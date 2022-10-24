@@ -12,15 +12,16 @@ cd Mr-Labkit/src
 ./run.sh generate
 # vagrantを使ってVMを準備します
 ./run.sh vagrant
-# 構成ファイルを適用します
-./run.sh all
-# NFSマウントによってクライアント公開鍵が置き換えられたので、
-# inv.iniの秘密鍵のディレクトリを修正
-sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
+# ベアメタルのサーバを構築します
+./run.sh baremetal
+# k8sクラスタを構築します
+./run.sh k8s-create
 ```
 - 事前準備：
     - ~~全てのノードにPython3をインストールしてください~~
     - ~~コントロールノードからターゲットノードに公開鍵接続が出来るようにしてください~~
+    - `/etc/ansible/ansible.cfg`の`ssh_args`を以下のように編集してください
+      - `ssh_args = -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null`
     - `src/vars.yml`を編集してください
 
 ## 各種サービスへのアクセス

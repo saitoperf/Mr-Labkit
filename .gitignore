@@ -5,3 +5,6 @@ src/inv.ini
 src/.vagrant
 src/kvm.sh
 src/Vagrantfile
+src/play-k8s-w.yml
+src/play-vagrant.yml
+src/vars-k8s.yml
