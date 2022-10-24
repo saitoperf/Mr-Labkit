@@ -30,7 +30,7 @@ if [ "$1" = 'vagrant' ]; then
     rm ~/.ssh/known_hosts
     vagrant destroy -f
     vagrant up --provider=libvirt
-    yes yes | ansible-playbook -bK -i inv.ini play-vagrant.yml
+    ansible-playbook -bK -i inv.ini play-vagrant.yml
 elif [ "$1" = 'generate' ]; then
     ./FileGenerator.py 
 elif [ "$1" = 'ldap' ]; then
