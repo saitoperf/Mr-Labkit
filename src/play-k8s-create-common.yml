@@ -1,0 +1,57 @@
+---
+- hosts: 
+  - k8s_master
+  - k8s_worker
+  gather_facts: yes
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml
+
+  tasks:
+  - name: swapoff -a
+    shell: swapoff -a
+  - name:
+    copy:
+      src: k8s/modules-load.d/k8s.conf
+      dest: /etc/modules-load.d/k8s.conf
+  - name:
+    copy:
+      src: k8s/sysctl.d/k8s.conf
+      dest:  /etc/sysctl.d/k8s.conf
+  - name:
+    shell: sysctl --system
+  - name:
+    apt:
+      name:
+      - apt-transport-https
+      - ca-certificates
+      - docker.io
+      - curl
+      state: latest
+
+  - name: chmod {{ user }} -aG docker
+    user:
+      name: "{{ user }}"
+      state: present
+      groups:
+      - docker
+      append: yes
+
+  - name: curl
+    get_url:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      dest: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+  - name:
+    copy:
+      src: k8s/kubernetes.list
+      dest: /etc/apt/sources.list.d/kubernetes.list
+  - name: apt update
+    apt:
+      update_cache: yes
+  
+  - name: apt install kubelet kubeadm
+    apt:
+      name:
+      - kubelet
+      - kubeadm
+      state: latest

@@ -10,11 +10,17 @@
 user: vagrant               # ターゲットノードのユーザ名
 serverip: '192.168.122.11'  # サーバのIPアドレス
 client:
-  nodes: 3                  # ノード数
+  nodes: 2                  # ノード数
   offset: '192.168.122.21'  # クライアントのIPアドレスのオフセット
 subnet: '192.168.122.0'     # サブネット
 subnetmask: '255.255.255.0' # サブネットマスク
-
+cidr: '24'
+gateway: '192.168.122.1'
+k8s:
+  masterip: '192.168.122.31'
+  worker:
+    nodes: 2
+    offset: '192.168.122.32'
 
 # user: taiki                 # ターゲットノードのユーザ名
 # serverip: '133.15.45.46'    # サーバにする計算機のIPアドレス

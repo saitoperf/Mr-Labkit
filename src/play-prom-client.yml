@@ -1,5 +1,7 @@
 ---
-- hosts: all
+- hosts: 
+  - server
+  - client
   gather_facts: yes
   remote_user: "{{ user }}"
   vars_files:
