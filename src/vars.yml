@@ -21,6 +21,9 @@ k8s:
   worker:
     nodes: 2
     offset: '192.168.122.32'
+gitlab:
+  name: xxxxx@gmail.com
+  password: xxxxxx
 
 # user: taiki                 # ターゲットノードのユーザ名
 # serverip: '133.15.45.46'    # サーバにする計算機のIPアドレス
