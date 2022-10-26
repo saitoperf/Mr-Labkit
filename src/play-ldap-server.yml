@@ -6,6 +6,13 @@
   - vars.yml
 
   tasks:
+  - name: change repository
+    command: perl -p -i.bak -e 's%(deb(?:-src|)\s+)https?://(?!archive\.canonical\.com|security\.ubuntu\.com)[^\s]+%$1http://archive.ubuntu.com/ubuntu/%' /etc/apt/sources.list 
+
+  - name: apt update
+    apt:
+      update_cache: yes
+
   - name: install package
     apt:
       name: 
@@ -40,7 +47,7 @@
 
   # 後で直す
   - name: sleep
-    command: sleep 5
+    command: sleep 10
 
   # すでにエントリがある場合に"コード68"を返す
   - name: ldapadd init
