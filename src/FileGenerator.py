@@ -24,6 +24,10 @@ class NomalFile:
                     line = line.replace('{{ k8s_masterip }}', self.vars['k8s']['masterip'])
                 if '{{ gateway }}' in line:
                     line = line.replace('{{ gateway }}', self.vars['gateway'])
+                if '{{ gitlab_name }}' in line:
+                    line = line.replace('{{ gitlab_name }}', self.vars['gitlab']['name'])
+                if '{{ gitlab_password }}' in line:
+                    line = line.replace('{{ gitlab_password }}', self.vars['gitlab']['password'])
                 replaced.append(line)
         return replaced
     
