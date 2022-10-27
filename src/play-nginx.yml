@@ -1,21 +1,16 @@
----
-- hosts: 
-  - server
-  - client
-  - revproxy
+- hosts: revproxy
   gather_facts: yes
   remote_user: "{{ user }}"
   vars_files:
   - vars.yml
 
   tasks:
-  - name: install docker
+  - name: install package
     apt:
       name: 
       - docker
       - docker-compose
-      state: latest
-
+  
   - name: chmod {{ user }} -aG docker
     user:
       name: "{{ user }}"
@@ -23,19 +18,21 @@
       groups:
       - docker
       append: yes
-  
-  - name: make prometheus dir
-    file:
-      path: /opt/Mr-Labkit/prometheus/client
-      state: directory
-      recurse: yes
 
-  - name: cp docker-compose.yml
+  - name: make docker dir
+    file:
+      path: /opt/Mr-Labkit/nginx
+      state: directory
+
+  - name: copy dir
     copy:
-      src: prometheus/client/docker-compose.yml
-      dest: /opt/Mr-Labkit/prometheus/client
+      src: nginx
+      dest: /opt/Mr-Labkit
+
+  - name: build nginx image
+    shell: docker build -t nginx . --network host chdir=/opt/Mr-Labkit/nginx/
 
   - name: docker compose
     docker_compose:
-      project_src: /opt/Mr-Labkit/prometheus/client
+      project_src: /opt/Mr-Labkit/nginx/
       state: present

@@ -16,6 +16,8 @@ class NomalFile:
                     line = line.replace('{{ user }}', self.vars['user'])
                 if '{{ serverip }}' in line:
                     line = line.replace('{{ serverip }}', self.vars['serverip'])
+                if '{{ revproxyip }}' in line:
+                    line = line.replace('{{ revproxyip }}', self.vars['revproxyip'])
                 if '{{ subnet }}' in line:
                     line = line.replace('{{ subnet }}', self.vars['subnet'])
                 if '{{ subnetmask }}' in line:
@@ -143,3 +145,9 @@ if __name__ == '__main__':
     
     replaced = vagrantfile.replace_variable('./template/Vagrantfile')
     vagrantfile.out_file(replaced, './Vagrantfile')
+
+    # nginx
+    replaced = nomalfile.replace_variable('./template/nginx/index.html')
+    vagrantfile.out_file(replaced, './files/nginx/index.html')
+    replaced = nomalfile.replace_variable('./template/nginx/nginx.conf')
+    vagrantfile.out_file(replaced, './files/nginx/nginx.conf')

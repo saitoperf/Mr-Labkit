@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    # volumes:
+    # - ./templates:/etc/nginx/templates
+    ports:
+    - "80:80"
+    - "443:443"
+    - "8080:8080"
+    - "8929:8929"
+    - "3000:3000"
+    - "9090:9090"
+    environment:
+    - NGINX_HOST=example.com
+    - NGINX_PORT=80

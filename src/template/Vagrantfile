@@ -7,6 +7,17 @@ Vagrant.configure("2") do |config|
         lv.cpus = 4
     end
 
+    # リバースプロキシ
+    config.vm.define :rev do |server|
+        server.vm.hostname = "rev"
+        server.vm.network :public_network, 
+            :dev => "virbr0",
+            :mode => "bridge",
+            :type => "bridge",
+            :ip => "{{ revproxyip }}"
+    end
+
+    # サーバ
     config.vm.define :s1 do |server|
         server.vm.hostname = "s1"
         server.vm.network :public_network, 
@@ -33,15 +44,3 @@ Vagrant.configure("2") do |config|
     {{ k8s_worker }}
 
 end
-
-# (0..2).each do |i|
-#     config.vm.define "c#{i+1}" do |host|
-#         ip = "192.168.122.21".split(".")[3].to_i + i
-#         host.vm.hostname = "c#{i+1}"
-#         host.vm.network :public_network, 
-#            :dev => "virbr0",
-#            :mode => "bridge",
-#            :type => "bridge",
-#            :ip => "192.168.122.#{ip}"
-#     end
-# end
