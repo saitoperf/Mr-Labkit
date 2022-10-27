@@ -24,7 +24,9 @@ baremetal(){
         play-gitlab-server.yml \
         play-nfs-server.yml \
         play-nfs-client.yml
-    sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
+    if [ "$?" = 0 ]; then
+        sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
+    fi
 }
 
 if [ "$1" = 'vagrant' ]; then
@@ -51,7 +53,9 @@ elif [ "$1" = 'nfs-server' ]; then
 elif [ "$1" = 'nfs-client' ]; then
     ansible-playbook -bK -i inv.ini play-nfs-client.yml
     # 認証に使う秘密鍵のディレクトリを変える
-    sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
+    if [ "$?" = 0 ]; then
+        sed -i -e "s/\/c[1-99]\//\/s1\//g" inv.ini
+    fi
 elif [ "$1" = 'gitlab' ]; then
     if [ "$2" = "get-pass" ]; then
         vagrant ssh s1 -- docker exec gitlab grep 'Password:' /etc/gitlab/initial_root_password
