@@ -30,7 +30,7 @@
       dest: /etc/netplan/50-vagrant.yaml
       line: "{{ item }}"
     with_items:
-    - '      gateway4: 192.168.122.1'
+    - '      gateway4: 192.168.122.1' # ここを変える
     - '      nameservers:'
     - '        addresses:'
     - '        - 8.8.8.8'

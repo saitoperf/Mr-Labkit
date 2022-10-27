@@ -17,4 +17,3 @@ services:
     hostname: 'grafana.example.com'
     ports:
       - 3000:3000
-  
