@@ -8,9 +8,11 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         # gitlab
-        external_url 'http://{{ serverip }}:8929'
+        external_url 'https://{{ revproxyip }}:8929'
         gitlab_rails['gitlab_shell_ssh_port'] = 2224
         nginx['listen_port'] = 80 
+        nginx['listen_https'] = false
+        letsencrypt['enable'] = false
 
         # LDAP
         gitlab_rails['ldap_enabled'] = true

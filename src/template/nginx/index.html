@@ -8,10 +8,14 @@
 <body>
 <h1>Wellcome to ようこそMr.ラボキット！</h1>
 <ul>
-    <li><a href="https://{{ revproxyip }}:8080">LDAP管理画面</a></li>
-    <li><a href="https://{{ revproxyip }}:8929">GitLab</a></li>
-    <li><a href="https://{{ revproxyip }}:3000">Grafana</a></li>
-    <li><a href="https://{{ revproxyip }}:9090">Prometheus</a></li>
+    <li><a href="https://192.168.122.11:8080">LDAP管理画面</a></li>
+    <li><a href="https://192.168.122.11:8929">GitLab</a></li>
+    <ul>
+        <li><a href="https://192.168.122.11:8929/users/sign_in">ログイン</a></li>
+        <li><a href="https://192.168.122.11:8929/-/profile">プロフィール設定</a></li>
+    </ul>
+    <li><a href="https://192.168.122.11:3000">Grafana</a></li>
+    <li><a href="https://192.168.122.11:9090">Prometheus</a></li>
 </ul>
 
 <p><a href="https://github.com/saitoperf/Mr-Labkit">Github</a></p>
