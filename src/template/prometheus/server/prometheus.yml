@@ -7,4 +7,5 @@ scrape_configs: # 監視対象ごとの設定
   static_configs:
   - targets: 
     - '{{ serverip }}:9100'
+    - '{{ revproxyip }}:9100'
     - '{{ client }}:9100'

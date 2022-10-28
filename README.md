@@ -24,9 +24,13 @@ cd Mr-Labkit/src
       - `ssh_args = -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null`
     - `src/vars.yml`を編集してください
 
-## 各種サービスへのアクセス
-- (ServerIPはそのうちドメインで指定できるようにしたい)
-- `ServerIP:8080`：LDAP管理画面
+## アクセス
+- ブラウザで、`src/vars.yml`に記述したリバースプロキシのIPアドレスを指定してください
+
+<!-- ## 各種サービスへのアクセス -->
+<!-- - (ServerIPはそのうちドメインで指定できるようにしたい) -->
+- 
+<!-- - `ServerIP:8080`：LDAP管理画面
     - Login DN：cn=admin,dc=example,dc=com
     - Password：admin
 - `ServerIP:8929`：GitLab
@@ -36,7 +40,7 @@ cd Mr-Labkit/src
 - `ServerIP:3000`：Grafana
     - Email or username：admin
     - Password：admin
-- `ServerIP:9090`：Prometheus
+- `ServerIP:9090`：Prometheus -->
 
 ## 注意！
 - nfsはまだコンテナ化されていません！(aptコマンドが使えるディストリビューションでのみ実行可能)
