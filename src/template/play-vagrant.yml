@@ -34,7 +34,8 @@
     - '      nameservers:'
     - '        addresses:'
     - '        - 8.8.8.8'
-
+    - '    eth0:'
+    - '      dhcp4: no'
   - name: 
     command: netplan apply
 
