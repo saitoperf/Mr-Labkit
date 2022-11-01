@@ -14,12 +14,18 @@
       path: /etc/netplan/01-netcfg.yaml
       state: absent
 
-  - name: 
-    command: ip addr flush eth0
-  - name: 
-    command: ip link set eth0 down
+  - name: cp /etc/systemd/resolved.conf
+    copy:
+      src: vagrant/resolved.conf
+      dest: /etc/systemd/resolved.conf
+  - name:
+    command: ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 
   # - name: 
+  #   command: ip addr flush eth0
+  # - name: 
+  #   command: ip link set eth0 down
+
   - name:
     shell: cat /etc/netplan/50-vagrant.yaml | grep gateway4
     ignore_errors: yes
@@ -33,13 +39,11 @@
     - '      gateway4: 192.168.122.1' # ここを変える
     - '      nameservers:'
     - '        addresses:'
+    - '        - {{ serverip }}'
     - '        - 8.8.8.8'
     - '    eth0:'
     - '      dhcp4: no'
-  - name: 
+  - name:
     command: netplan apply
-
-  # - name:
-  #   apt:
-  #     name:
-  #     - net-tools
+  - name:
+    command: systemctl restart systemd-resolved
