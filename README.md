@@ -9,6 +9,14 @@
 git clone https://github.com/saitoperf/Mr-Labkit.git
 cd Mr-Labkit/src
 # vars.yml を編集した後に実行してください
+```
+```sh
+# venvの設定
+python3 -m venv venv
+source venv/bin/activate
+pip install ansible==2.9.6
+```
+```sh
 ./run.sh generate
 # vagrantを使ってVMを準備します
 ./run.sh vagrant
