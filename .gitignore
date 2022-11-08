@@ -11,3 +11,5 @@ src/vars-k8s.yml
 src/files/nginx/index.html
 src/files/nginx/nginx.conf
 memo
+src/cobra-cli/go.sum
+src/cobra-cli/LICENSE
