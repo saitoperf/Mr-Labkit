@@ -15,6 +15,7 @@
       - docker
       - docker-compose
       state: latest
+      update_cache: yes
 
   - name: chmod {{ user }} -aG docker
     user:

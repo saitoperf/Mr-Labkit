@@ -1,17 +1,9 @@
-//
-// Do any local configuration here
-//
-
-// Consider adding the 1918 zones here, if they are not used in your
-// organization
-//include "/etc/bind/zones.rfc1918";
-
 zone "example.com" {
     type secondary;
     file "db.example.com";
     masters { 192.168.122.12; };
-};        
-          
+};
+
 zone "122.168.192.in-addr.arpa" {
     type secondary;
     file "db.192";

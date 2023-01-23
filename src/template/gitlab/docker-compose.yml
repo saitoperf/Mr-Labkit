@@ -44,10 +44,10 @@ services:
         gitlab_rails['smtp_openssl_verify_mode'] = 'peer'
 
     ports:
-      - '8929:80'
-      - '2224:22'
+    - '8929:80'
+    - '2224:22'
     volumes:
-      - '$GITLAB_HOME/config:/etc/gitlab'
-      - '$GITLAB_HOME/logs:/var/log/gitlab'
-      - '$GITLAB_HOME/data:/var/opt/gitlab'
+    - '/opt/Mr-Labkit/gitlab/config:/etc/gitlab'
+    - '/opt/Mr-Labkit/gitlab/logs:/var/log/gitlab'
+    - '/opt/Mr-Labkit/gitlab/data:/var/opt/gitlab'
     shm_size: '256m'

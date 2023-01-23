@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  bind:
+    image: 'ubuntu/bind9'
+    restart: always
+    hostname: 'bind'
+    container_name: bind
+    ports:
+    - '53:53'
+    # volumes:
+    # - type: bind
+    #   source: /opt/Mr-Labkit/bind
+    #   target: /etc/bind

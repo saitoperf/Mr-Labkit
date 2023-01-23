@@ -28,6 +28,7 @@
       - docker.io
       - curl
       state: latest
+      update_cache: yes
 
   - name: chmod {{ user }} -aG docker
     user:
@@ -52,6 +53,10 @@
   - name: apt install kubelet kubeadm
     apt:
       name:
-      - kubelet
-      - kubeadm
-      state: latest
+      - kubelet=1.23.1-00
+      - kubeadm=1.23.1-00
+      allow_downgrade: yes
+      # dpkg_options: 
+      # - force-downgrade
+      # - allow_downgrades
+      # allow_change_held_packages: yes

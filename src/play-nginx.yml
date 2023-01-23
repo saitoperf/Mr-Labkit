@@ -10,6 +10,7 @@
       name: 
       - docker
       - docker-compose
+      update_cache: yes
   
   - name: chmod {{ user }} -aG docker
     user:

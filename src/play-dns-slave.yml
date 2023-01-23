@@ -1,8 +1,39 @@
----
-- hosts: all
+- hosts: c1
   gather_facts: yes
+  remote_user: "{{ user }}"
+  vars_files:
+  - vars.yml
 
   tasks:
-  - name:
+  - name: install package
     apt:
-    
+      name: 
+      - docker
+      - docker-compose
+  
+  - name: chmod {{ user }} -aG docker
+    user:
+      name: "{{ user }}"
+      state: present
+      groups:
+      - docker
+      append: yes
+
+  - name: make dns dir
+    file:
+      path: /opt/Mr-Labkit/bind9
+      state: directory
+
+  # ここだけ変える
+  - name: copy dir
+    copy:
+      src: bind9/slave
+      dest: /opt/Mr-Labkit/bind9
+
+  - name: build nginx image
+    shell: docker build -t bind9 . --network host chdir=/opt/Mr-Labkit/bind9/
+
+  - name: docker compose
+    docker_compose:
+      project_src: /opt/Mr-Labkit/bind9/
+      state: present

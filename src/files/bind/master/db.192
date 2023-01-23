@@ -1,7 +1,3 @@
-;
-; BIND reverse data file for local 192.168.1.XXX net
-;
-$TTL    604800
 @       IN      SOA     ns.example.com. root.example.com. (
                               2         ; Serial
                          604800         ; Refresh

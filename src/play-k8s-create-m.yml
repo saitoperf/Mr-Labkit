@@ -9,8 +9,12 @@
   - name: apt install kubectl
     apt: 
       name:
-      - kubectl
-      state: latest
+      - kubectl=1.23.1-00
+      # allow_change_held_packages: yes
+      allow_downgrade: yes
+      # dpkg_options: 
+      # - force-downgrade
+      # - allow_downgrades
   - name: copy kubeadm-config.yaml
     copy: 
       src: k8s/kubeadm-config.yaml

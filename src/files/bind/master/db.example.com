@@ -1,7 +1,3 @@
-;
-; BIND data file for example.com
-;
-$TTL    604800
 @       IN      SOA     example.com. root.example.com. (
                               2         ; Serial
                          604800         ; Refresh

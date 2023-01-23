@@ -14,7 +14,7 @@ cd Mr-Labkit/src
 # venvの設定
 python3 -m venv venv
 source venv/bin/activate
-pip install ansible==2.9.6
+pip install ansible-core==2.12.3
 ```
 ```sh
 ./run.sh generate
@@ -26,29 +26,28 @@ pip install ansible==2.9.6
 ./run.sh k8s-create
 ```
 - 事前準備：
-    - ~~全てのノードにPython3をインストールしてください~~
-    - ~~コントロールノードからターゲットノードに公開鍵接続が出来るようにしてください~~
-    - `/etc/ansible/ansible.cfg`の`ssh_args`を以下のように編集してください
-      - `ssh_args = -C -o ControlMaster=auto -o ControlPersist=60s -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null`
     - `src/vars.yml`を編集してください
 
 ## アクセス
 - ブラウザで、`src/vars.yml`に記述したリバースプロキシのIPアドレスを指定してください
 
-<!-- ## 各種サービスへのアクセス -->
+## 各種サービスの初期ユーザ名とパスワード
 <!-- - (ServerIPはそのうちドメインで指定できるようにしたい) -->
 - 
-<!-- - `ServerIP:8080`：LDAP管理画面
+- LDAP管理画面
     - Login DN：cn=admin,dc=example,dc=com
     - Password：admin
-- `ServerIP:8929`：GitLab
-    - 初期のユーザ名とパスワードは[こちら](https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-engine)をご参照ください
-    - Username or email：root
-    - Password：`docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password`
-- `ServerIP:3000`：Grafana
+- GitLab
+    - ルートユーザ名とパスワードは[こちら](https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-engine)をご参照ください
+        - Username：root
+        - Password：`docker exec -it gitlab grep 'Password:' /etc/gitlab/initial_root_password`
+    - テスト用のLDAPユーザを使う場合
+        - Username：user01
+        - Password：user01
+- Grafana
     - Email or username：admin
     - Password：admin
-- `ServerIP:9090`：Prometheus -->
+- Prometheus
 
 ## 注意！
 - nfsはまだコンテナ化されていません！(aptコマンドが使えるディストリビューションでのみ実行可能)

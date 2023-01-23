@@ -70,7 +70,7 @@ elif [ "$1" = 'k8s-delete' ]; then
     k8s-delete
 elif [ "$1" = 'all' ]; then
     baremetal
-    k8s
+    k8s-create
 else
     echo 'Usage: ./run.sh [OPTION]'
     echo 'options'

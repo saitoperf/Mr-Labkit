@@ -12,6 +12,7 @@
       - docker
       - docker-compose
       - ldap-utils
+      update_cache: yes
 
   - name: chmod {{ user }} -aG docker
     user:
